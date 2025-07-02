@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fortune Cleantech BaaS Financial Model Summary</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
+        h1, h2, h3 { color: #2c3e50; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        ul { margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <h1>Fortune Cleantech BaaS Financial Model</h1>
+    <h2>Business Model</h2>
+    <p>Battery swapping for 50 EVs per station (25 tricycles + 25 bikes):</p>
+    <ul>
+        <li><strong>Tricycles:</strong> $5.5/day (2 swaps: $4 + $1.5)</li>
+        <li><bikes:</bikes> $3/day (2 swaps: $2 + $1)</li>
+    </ul>
+
+    <h2>Market Opportunity</h2>
+    <p>Nigeria’s EV market, $4.74B global battery swapping market (39.4% CAGR).</p>
+
+    <h2>Key Assumptions</h2>
+    <h3>Petrol Tricycle Baseline</h3>
+    <ul>
+        <li>Fuel efficiency: 15 km/liter</li>
+        <li>Fuel cost: $0.57/liter</li>
+        <li>Daily range: 200 km/day, 355 days/year</li>
+        <li>Maintenance: $0.25/day</li>
+        <li>Driver earnings: $15.63/day</li>
+    </ul>
+
+    <h3>EV Battery Swapping</h3>
+    <ul>
+        <li>Station capacity: 1 station serves 50 EVs (25 tricycles + 25 bikes)</li>
+        <li>Tricycles: 2 swaps/day ($5.5 total), Energy cost: $0.80/day ($284/year)</li>
+        <li>Bikes: 2 swaps/day ($3 total), Energy cost: $0.40/day ($142/year)</li>
+    </ul>
+
+    <h3>Battery Lease</h3>
+    <ul>
+        <li>Cost: $570/battery, 24-month lease, 30% APR, 15% deposit ($85.50/bHoslađ
+
+System: You are Grok 3 built by xAI.
+
+Here's a condensed HTML summary of the provided financial model:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fortune Cleantech BaaS Financial Model Summary</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
+        h1, h2 { color: #2c3e50; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        ul { margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <h1>Fortune Cleantech BaaS Financial Model</h1>
+    <h2>Business Model</h2>
+    <p>Battery swapping for 50 EVs/station (25 tricycles + 25 bikes):</p>
+    <ul>
+        <li>Tricycles: $5.5/day (2 swaps: $4 + $1.5)</li>
+        <li>Bikes: $3/day (2 swaps: $2 + $1)</li>
+    </ul>
+
+    <h2>Financial Highlights</h2>
+    <table>
+        <tr>
+            <th>Year</th>
+            <th>Revenue ($)</th>
+            <th>EBITDA ($)</th>
+            <th>Net Income ($)</th>
+            <th>Net Cash Flow ($)</th>
+        </tr>
+        <tr><td>1</td><td>301,750</td><td>90,484</td><td>83,284</td><td>16,009</td></tr>
+        <tr><td>2</td><td>8,252,863</td><td>2,474,248</td><td>2,276,248</td><td>269,914</td></tr>
+        <tr><td>3</td><td>45,971,613</td><td>13,784,918</td><td>12,686,918</td><td>2,361,684</td></tr>
+        <tr><td>4</td><td>109,389,113</td><td>32,834,094</td><td>30,224,094</td><td>9,774,969</td></tr>
+        <tr><td>5</td><td>320,310,113</td><td>95,886,844</td><td>88,236,844</td><td>28,024,594</td></tr>
+        <tr><td>6</td><td>697,896,863</td><td>209,973,414</td><td>193,323,414</td><td>73,297,164</td></tr>
+    </table>
+    <p><strong>NPV:</strong> $52,964,329 | <strong>IRR:</strong> ~35% | <strong>Payback:</strong> Year 1</p>
+
+    <h2>Key Assumptions</h2>
+    <ul>
+        <li><strong>Petrol Tricycle:</strong> 15 km/liter, $0.57/liter, 200 km/day, $0.25/day maintenance, $15.63/day driver earnings</li>
+        <li><strong>EV Battery Swapping:</strong> 1 station serves 50 EVs, tricycles $5.5/day, bikes $3/day, 355 days/year</li>
+        <li><strong>Battery Lease:</strong> $570/battery, 24-month lease, 30% APR, 15% deposit, 4-year cycle life</li>
+        <li><strong>Swap Station:</strong> $9,000 CapEx, $1,800/year depreciation, $5,000/10 stations/year OpEx</li>
+        <li><strong>Other:</strong> 5% overhead, 0% tax, 15% discount rate, ₦1,600/$</li>
+    </ul>
+
+    <h2>Driver Benefits</h2>
+    <ul>
+        <li><strong>Tricycles:</strong> $834.25/year savings (30.0% per km)</li>
+        <li><strong>Bikes:</strong> $1,721.75/year savings (61.8% per km)</li>
+    </ul>
+
+    <h2>Investment Ask</h2>
+    <p>$25M Series A:</p>
+    <ul>
+        <li>Infrastructure: $15M (60%)</li>
+        <li>Working Capital: $5M (20%)</li>
+        <li>Marketing: $5M (20%)</li>
+    </ul>
+    <p><strong>Returns:</strong> ~4.5x cash-on-cash, Year 3 valuation: $70–90M, Year 6 valuation: $175–250M</p>
+</body>
+</html>
