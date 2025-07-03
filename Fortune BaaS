@@ -1,0 +1,2112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fortune Cleantech BaaS Financial Model</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: 300;
+        }
+        
+        .header p {
+            margin: 10px 0 20px 0;
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+        
+        .download-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-bottom: 1px solid #dee2e6;
+            text-align: center;
+        }
+        
+        .download-btn {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+            margin: 0 10px;
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+        }
+        
+        .tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+            overflow-x: auto;
+        }
+        
+        .tab {
+            padding: 15px 25px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+            color: #6c757d;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .tab.active {
+            color: #2c3e50;
+            border-bottom-color: #3498db;
+            background: white;
+        }
+        
+        .tab:hover {
+            background: #e9ecef;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .sheet {
+            display: none;
+        }
+        
+        .sheet.active {
+            display: block;
+        }
+        
+        .excel-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 12px;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .excel-table th {
+            background: linear-gradient(135deg, #34495e 0%, #2c3e50 100%);
+            color: white;
+            padding: 12px 8px;
+            text-align: center;
+            font-weight: 600;
+            border-right: 1px solid #46637f;
+        }
+        
+        .excel-table td {
+            padding: 10px 8px;
+            text-align: center;
+            border-bottom: 1px solid #e9ecef;
+            border-right: 1px solid #e9ecef;
+        }
+        
+        .excel-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .excel-table tr:hover {
+            background: #e3f2fd;
+        }
+        
+        .currency {
+            color: #28a745;
+            font-weight: 600;
+        }
+        
+        .negative {
+            color: #dc3545;
+        }
+        
+        .section-title {
+            font-size: 1.5em;
+            color: #2c3e50;
+            margin: 30px 0 15px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3498db;
+        }
+        
+        .assumptions {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .assumptions h3 {
+            color: #2c3e50;
+            margin-top: 0;
+        }
+        
+        .assumptions ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .excel-table {
+                font-size: 10px;
+            }
+            
+            .excel-table th,
+            .excel-table td {
+                padding: 8px 4px;
+            }
+            
+            .tabs {
+                flex-wrap: wrap;
+            }
+            
+            .tab {
+                flex: 1;
+                min-width: 120px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Fortune Cleantech BaaS</h1>
+            <p>Complete Financial Model & Business Plan</p>
+            <p style="font-size: 0.9em; opacity: 0.8;">6-Year Projection | Battery-as-a-Service | Nigeria Market</p>
+        </div>
+        
+        <div class="download-section">
+            <button class="download-btn" onclick="downloadExcel()">
+                📊 Download Complete Excel Model
+            </button>
+            <button class="download-btn" onclick="downloadSummary()">
+                📈 Download Executive Summary
+            </button>
+            <p style="margin: 15px 0 0 0; color: #6c757d;">
+                Complete financial model with all worksheets, formulas, and assumptions
+            </p>
+        </div>
+        
+        <div class="tabs">
+            <button class="tab active" onclick="showSheet('assumptions')">Key Assumptions</button>
+            <button class="tab" onclick="showSheet('scale')">Scale-Up Plan</button>
+            <button class="tab" onclick="showSheet('revenue')">Revenue Model</button>
+            <button class="tab" onclick="showSheet('costs')">Cost Structure</button>
+            <button class="tab" onclick="showSheet('income')">Income Statement</button>
+            <button class="tab" onclick="showSheet('cashflow')">Cash Flow</button>
+            <button class="tab" onclick="showSheet('funding')">Funding Requirements</button>
+            <button class="tab" onclick="showSheet('comparison')">Cost Comparison</button>
+            <button class="tab" onclick="showSheet('sensitivity')">Sensitivity Analysis</button>
+        </div>
+        
+        <div class="content">
+            <!-- Key Assumptions Sheet -->
+            <div id="assumptions" class="sheet active">
+                <h2 class="section-title">Key Assumptions</h2>
+                
+                <div class="assumptions">
+                    <h3>🚗 Petrol Vehicle Baseline</h3>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0;">
+                        <div>
+                            <h4>Tricycles</h4>
+                            <ul>
+                                <li>Fuel Efficiency: <strong>20 km/L</strong></li>
+                                <li>Fuel Cost: <strong>₦910/L ($0.57/L)</strong></li>
+                                <li>Daily Range: <strong>200 km/day, 355 days/year</strong></li>
+                                <li>Maintenance: <strong>$0.25/day</strong></li>
+                                <li>Driver Earnings: <strong>₦25,000/day ($15.63/day)</strong></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4>Bikes</h4>
+                            <ul>
+                                <li>Fuel Efficiency: <strong>45 km/L</strong></li>
+                                <li>Fuel Cost: <strong>₦910/L ($0.57/L)</strong></li>
+                                <li>Daily Range: <strong>200 km/day, 355 days/year</strong></li>
+                                <li>Maintenance: <strong>$0.25/day</strong></li>
+                                <li>Daily Revenue: <strong>₦12,000 ($7.50/day)</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="assumptions">
+                    <h3>🔋 EV Battery Swapping Model</h3>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0;">
+                        <div>
+                            <h4>Station Operations</h4>
+                            <ul>
+                                <li>Capacity: <strong>1 station serves 50 EVs</strong> (25 tricycles + 25 bikes)</li>
+                                <li>Tricycles: <strong>2 swaps/day</strong> ($2 + $2 = $4/day)</li>
+                                <li>Bikes: <strong>2 swaps/day</strong> ($1 + $1 = $2/day)</li>
+                                <li>Operating Days: <strong>355 days/year</strong></li>
+                                <li>Energy Cost: <strong>$0.04/kWh</strong> (Fortune Cleantech pays)</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4>Energy Consumption</h4>
+                            <ul>
+                                <li>Tricycles: <strong>8 kWh/day → $113.60/EV/year</strong></li>
+                                <li>Bikes: <strong>2 kWh/day → $28.40/EV/year</strong></li>
+                                <li>Average Energy Cost: <strong>$71/EV/year</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="assumptions">
+                    <h3>🔋 Battery Lease Structure</h3>
+                    <ul>
+                        <li>Battery Cost: <strong>$570/battery</strong></li>
+                        <li>Lease Terms: <strong>24-month term, 30% APR, 15% deposit ($85.50/battery)</strong></li>
+                        <li>Annual Lease Cost: <strong>$336.84/battery</strong></li>
+                        <li>Battery Requirements: <strong>Tricycles: 3 batteries/EV | Bikes: 1.5 batteries/EV | Average: 2.25 batteries/EV</strong></li>
+                        <li>Battery Cycle Life: <strong>4 years</strong> (allowing reuse after initial lease)</li>
+                    </ul>
+                </div>
+
+                <div class="assumptions">
+                    <h3>🏗️ Infrastructure Costs</h3>
+                    <ul>
+                        <li>Station CapEx: <strong>$9,000/station</strong></li>
+                        <li>Depreciation: <strong>5-year straight-line ($1,800/station/year)</strong></li>
+                        <li>Station OpEx: <strong>$5,000 per 10 stations/year</strong></li>
+                    </ul>
+                </div>
+
+                <table class="excel-table">
+                    <thead>
+                        <tr>
+                            <th>Key Metrics</th>
+                            <th>Tricycles</th>
+                            <th>Bikes</th>
+                            <th>Average</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Daily Swap Revenue</strong></td>
+                            <td class="currency">$4.00</td>
+                            <td class="currency">$2.00</td>
+                            <td class="currency">$3.00</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Annual Revenue per EV</strong></td>
+                            <td class="currency">$1,420</td>
+                            <td class="currency">$710</td>
+                            <td class="currency">$1,065</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Energy Cost per EV/Year</strong></td>
+                            <td class="currency">$113.60</td>
+                            <td class="currency">$28.40</td>
+                            <td class="currency">$71.00</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Batteries Required per EV</strong></td>
+                            <td>3.0</td>
+                            <td>1.5</td>
+                            <td>2.25</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Battery Lease Cost per EV/Year</strong></td>
+                            <td class="currency">$1,010.52</td>
+                            <td class="currency">$505.26</td>
+                            <td class="currency">$757.89</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Scale-Up Plan Sheet -->
+            <div id="scale" class="sheet">
+                <h2 class="section-title">Scale-Up Timeline</h2>
+                
+                <table class="excel-table">
+                    <thead>
+                        <tr>
+                            <th>Year</th>
+                            <th>Total EVs</th>
+                            <th>Tricycles</th>
+                            <th>Bikes</th>
+                            <th>Stations</th>
+                            <th>New Batteries</th>
+                            <th>Cumulative Batteries</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>1</strong></td>
+                            <td>200</td>
+                            <td>100</td>
+                            <td>100</td>
+                            <td>4</td>
+                            <td>450</td>
+                            <td>450</td>
+                        </tr>
+                        <tr>
+                            <td><strong>2</strong></td>
+                            <td>5,470</td>
+                            <td>2,735</td>
+                            <td>2,735</td>
+                            <td>110</td>
+                            <td>12,308</td>
+                            <td>12,758</td>
+                        </tr>
+                        <tr>
+                            <td><strong>3</strong></td>
+                            <td>30,470</td>
+                            <td>15,235</td>
+                            <td>15,235</td>
+                            <td>610</td>
+                            <td>68,108</td>
+                            <td>80,866</td>
+                        </tr>
+                        <tr>
+                            <td><strong>4</strong></td>
+                            <td>72,470</td>
+                            <td>36,235</td>
+                            <td>36,235</td>
+                            <td>1,450</td>
+                            <td>150,750</td>
+                            <td>231,616</td>
+                        </tr>
+                        <tr>
+                            <td><strong>5</strong></td>
+                            <td>212,470</td>
+                            <td>106,235</td>
+                            <td>106,235</td>
+                            <td>4,250</td>
+                            <td>409,500</td>
+                            <td>641,116</td>
+                        </tr>
+                        <tr>
+                            <td><strong>6</strong></td>
+                            <td>462,470</td>
+                            <td>231,235</td>
+                            <td>231,235</td>
+                            <td>9,250</td>
+                            <td>877,500</td>
+                            <td>1,518,616</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="assumptions">
+                    <h3>📈 Growth Strategy</h3>
+                    <ul>
+                        <li><strong>Year 1:</strong> Pilot phase with 200 EVs across 4 stations</li>
+                        <li><strong>Year 2:</strong> Rapid expansion to 5,470 EVs (2,635% growth)</li>
+                        <li><strong>Year 3:</strong> Market penetration with 30,470 EVs (457% growth)</li>
+                        <li><strong>Year 4:</strong> Scale consolidation to 72,470 EVs (138% growth)</li>
+                        <li><strong>Year 5:</strong> Major market capture with 212,470 EVs (193% growth)</li>
+                        <li><strong>Year 6:</strong> Market leadership with 462,470 EVs (118% growth)</li>
+                    </ul>
+                </div>
+
+                <div class="assumptions">
+                    <h3>🎯 Key Scaling Metrics</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin: 20px 0;">
+                        <div style="background: #e3f2fd; padding: 15px; border-radius: 8px;">
+                            <h4>Station Utilization</h4>
+                            <p><strong>50 EVs per station</strong> (25 tricycles + 25 bikes)</p>
+                            <p>Optimal capacity for efficient operations</p>
+                        </div>
+                        <div style="background: #f3e5f5; padding: 15px; border-radius: 8px;">
+                            <h4>Battery-to-EV Ratio</h4>
+                            <p><strong>2.25 batteries per EV</strong> on average</p>
+                            <p>Ensures 24/7 availability with charging cycles</p>
+                        </div>
+                        <div style="background: #e8f5e8; padding: 15px; border-radius: 8px;">
+                            <h4>Geographic Expansion</h4>
+                            <p><strong>9,250 stations by Year 6</strong></p>
+                            <p>Coverage across major Nigerian cities</p>
+                        </div>
+                    </div>
+                </div>
+
+                <table class="excel-table">
+                    <thead>
+                        <tr>
+                            <th>Expansion Metrics</th>
+                            <th>Year 1</th>
+                            <th>Year 2</th>
+                            <th>Year 3</th>
+                            <th>Year 4</th>
+                            <th>Year 5</th>
+                            <th>Year 6</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>YoY EV Growth %</strong></td>
+                            <td>-</td>
+                            <td>2,635%</td>
+                            <td>457%</td>
+                            <td>138%</td>
+                            <td>193%</td>
+                            <td>118%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>New Stations Added</strong></td>
+                            <td>4</td>
+                            <td>106</td>
+                            <td>500</td>
+                            <td>840</td>
+                            <td>2,800</td>
+                            <td>5,000</td>
+                        </tr>
+                        <tr>
+                            <td><strong>CapEx per Station</strong></td>
+                            <td class="currency">$9,000</td>
+                            <td class="currency">$9,000</td>
+                            <td class="currency">$9,000</td>
+                            <td class="currency">$9,000</td>
+                            <td class="currency">$9,000</td>
+                            <td class="currency">$9,000</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Total Station Investment</strong></td>
+                            <td class="currency">$36,000</td>
+                            <td class="currency">$954,000</td>
+                            <td class="currency">$4,500,000</td>
+                            <td class="currency">$7,560,000</td>
+                            <td class="currency">$25,200,000</td>
+                            <td class="currency">$45,000,000</td>
+                        </tr>
+                        <tr>
+                            <td><strong>EVs per Station</strong></td>
+                            <td>50</td>
+                            <td>50</td>
+                            <td>50</td>
+                            <td>50</td>
+                            <td>50</td>
+                            <td>50</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Revenue Model Sheet -->
+            <div id="revenue" class="sheet">
+                <h2 class="section-title">Revenue Model & 6-Year Projections</h2>
+                
+                <div class="assumptions">
+                    <h3>💰 Per-EV Revenue Structure</h3>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
+                        <div>
+                            <h4>Tricycles</h4>
+                            <ul>
+                                <li>Swaps per day: 2</li>
+                                <li>Price per swap: $2.00</li>
+                                <li>Daily revenue: $4.00</li>
+                                <li>Annual revenue: $1,420</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4>Bikes</h4>
+                            <ul>
+                                <li>Swaps per day: 2</li>
+                                <li>Price per swap: $1.00</li>
+                                <li>Daily revenue: $2.00</li>
+                                <li>Annual revenue: $710</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4>Average per EV</h4>
+                            <ul>
+                                <li>Daily revenue: $3.00</li>
+                                <li>Annual revenue: $1,065</li>
+                                <li>Operating days: 355/year</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <table class="excel-table">
+                    <thead>
+                        <tr>
+                            <th>Year</th>
+                            <th>Total EVs</th>
+                            <th>Tricycles</th>
+                            <th>Bikes</th>
+                            <th>Tricycle Revenue</th>
+                            <th>Bike Revenue</th>
+                            <th>Total Revenue</th>
+                            <th>Growth %</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>200</td>
+                            <td>100</td>
+                            <td>100</td>
+                            <td class="currency">$142,000</td>
+                            <td class="currency">$71,000</td>
+                            <td class="currency">$213,000</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>5,470</td>
+                            <td>2,735</td>
+                            <td>2,735</td>
+                            <td class="currency">$3,883,700</td>
+                            <td class="currency">$1,941,850</td>
+                            <td class="currency">$5,825,550</td>
+                            <td class="currency">2,635%</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>30,470</td>
+                            <td>15,235</td>
+                            <td>15,235</td>
+                            <td class="currency">$21,633,700</td>
+                            <td class="currency">$10,816,850</td>
+                            <td class="currency">$32,450,550</td>
+                            <td class="currency">457%</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>72,470</td>
+                            <td>36,235</td>
+                            <td>36,235</td>
+                            <td class="currency">$51,453,700</td>
+                            <td class="currency">$25,726,850</td>
+                            <td class="currency">$77,180,550</td>
+                            <td class="currency">138%</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>212,470</td>
+                            <td>106,235</td>
+                            <td>106,235</td>
+                            <td class="currency">$150,853,700</td>
+                            <td class="currency">$75,426,850</td>
+                            <td class="currency">$226,280,550</td>
+                            <td class="currency">193%</td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>462,470</td>
+                            <td>231,235</td>
+                            <td>231,235</td>
+                            <td class="currency">$328,353,700</td>
+                            <td class="currency">$164,176,850</td>
+                            <td class="currency">$492,530,550</td>
+                            <td class="currency">118%</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="assumptions">
+                    <h3>📈 Revenue Growth Drivers</h3>
+                    <ul>
+                        <li><strong>Network Effects:</strong> More stations → better coverage → higher adoption</li>
+                        <li><strong>Cost Savings:</strong> 28-33% operating cost reduction vs petrol vehicles</li>
+                        <li><strong>Service Quality:</strong> Faster swaps than charging, consistent availability</li>
+                        <li><strong>Market Expansion:</strong> Geographic rollout across Nigeria's major cities</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Cost Structure Sheet -->
+            <div id="costs" class="sheet">
+                <h2 class="section-title">Comprehensive Cost Structure</h2>
+                
+                <div class="assumptions">
+                    <h3>💸 Cost Components Overview</h3>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div>
+                            <h4>Operating Costs (Annual)</h4>
+                            <ul>
+                                <li>Energy Costs: $71/EV/year</li>
+                                <li>Battery Lease: $336.84/battery/year</li>
+                                <li>Station OpEx: $5,000 per 10 stations</li>
+                                <li>Overhead: 5% of revenue (min $42.5K)</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4>Capital Expenditure</h4>
+                            <ul>
+                                <li>Station CapEx: $9,000/station</li>
+                                <li>Battery Deposits: $85.50/battery</li>
+                                <li>Depreciation: 5-year straight-line</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <table class="excel-table">
+                    <thead>
+                        <tr>
+                            <th>Year</th>
+                            <th>Energy Cost</th>
+                            <th>Battery Lease</th>
+                            <th>Station OpEx</th>
+                            <th>Overhead</th>
+                            <th>Depreciation</th>
+                            <th>Total OpEx</th>
+                            <th>OpEx/EV</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td class="currency">$14,200</td>
+                            <td class="currency">$151,578</td>
+                            <td class="currency">$2,000</td>
+                            <td class="currency">$42,500</td>
+                            <td class="currency">$7,200</td>
+                            <td class="currency">$217,478</td>
+                            <td class="currency">$1,087</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td class="currency">$388,370</td>
+                            <td class="currency">$4,145,862</td>
+                            <td class="currency">$55,000</td>
+                            <td class="currency">$291,278</td>
+                            <td class="currency">$198,000</td>
+                            <td class="currency">$5,078,510</td>
+                            <td class="currency">$928</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td class="currency">$2,163,370</td>
+                            <td class="currency">$23,093,004</td>
+                            <td class="currency">$305,000</td>
+                            <td class="currency">$1,622,528</td>
+                            <td class="currency">$1,098,000</td>
+                            <td class="currency">$28,281,902</td>
+                            <td class="currency">$928</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td class="currency">$5,145,370</td>
+                            <td class="currency">$54,924,453</td>
+                            <td class="currency">$725,000</td>
+                            <td class="currency">$3,859,028</td>
+                            <td class="currency">$2,610,000</td>
+                            <td class="currency">$67,263,851</td>
+                            <td class="currency">$928</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td class="currency">$15,085,370</td>
+                            <td class="currency">$161,026,653</td>
+                            <td class="currency">$2,125,000</td>
+                            <td class="currency">$11,314,028</td>
+                            <td class="currency">$7,650,000</td>
+                            <td class="currency">$197,201,051</td>
+                            <td class="currency">$928</td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td class="currency">$32,835,370</td>
+                            <td class="currency">$350,897,496</td>
+                            <td class="currency">$4,625,000</td>
+                            <td class="currency">$24,626,528</td>
+                            <td class="currency">$16,650,000</td>
+                            <td class="currency">$429,634,394</td>
+                            <td class="currency">$928</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h3 class="section-title">Cost Breakdown by Category</h3>
+                
+                <table class="excel-table">
+                    <thead>
+                        <tr>
+                            <th>Cost Category</th>
+                            <th>Year 1</th>
+                            <th>Year 2</th>
+                            <th>Year 3</th>
+                            <th>% of Total (Y3)</th>
+                            <th>Cost Driver</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Battery Lease</strong></td>
+                            <td class="currency">$151,578</td>
+                            <td class="currency">$4,145,862</td>
+                            <td class="currency">$23,093,004</td>
+                            <td class="currency">81.7%</td>
+                            <td>Number of batteries × lease rate</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Energy Costs</strong></td>
+                            <td class="currency">$14,200</td>
+                            <td class="currency">$388,370</td>
+                            <td class="currency">$2,163,370</td>
+                            <td class="currency">7.6%</td>
+                            <td>EV count × energy consumption</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Overhead</strong></td>
+                            <td class="currency">$42,500</td>
+                            <td class="currency">$291,278</td>
+                            <td class="currency">$1,622,528</td>
+                            <td class="currency">5.7%</td>
+                            <td>5% of revenue (minimum $42.5K)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Depreciation</strong></td>
+                            <td class="currency">$7,200</td>
+                            <td class="currency">$198,000</td>
+                            <td class="currency">$1,098,000</td>
+                            <td class="currency">3.9%</td>
+                            <td>Station CapEx ÷ 5 years</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Station OpEx</strong></td>
+                            <td class="currency">$2,000</td>
+                            <td class="currency">$55,000</td>
+                            <td class="currency">$305,000</td>
+                            <td class="currency">1.1%</td>
+                            <td>$5,000 per 10 stations</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="assumptions">
+                    <h3>⚖️ Cost Optimization Strategies</h3>
+                    <ul>
+                        <li><strong>Scale Economics:</strong> Battery lease costs decrease per unit as volume increases</li>
+                        <li><strong>Energy Efficiency:</strong> Optimized charging schedules and battery management</li>
+                        <li><strong>Station Utilization:</strong> Higher EV density per station reduces per-unit costs</li>
+                        <li><strong>Supply Chain:</strong> Direct battery manufacturer relationships for better terms</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Income Statement Sheet -->
+            <div id="income" class="sheet">
+                <h2 class="section-title">6-Year Income Statement</h2>
+                
+                <table class="excel-table">
+                    <thead>
+                        <tr>
+                            <th>Income Statement (USD)</th>
+                            <th>Year 1</th>
+                            <th>Year 2</th>
+                            <th>Year 3</th>
+                            <th>Year 4</th>
+                            <th>Year 5</th>
+                            <th>Year 6</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background: #e8f5e8;">
+                            <td><strong>REVENUE</strong></td>
+                            <td class="currency">$213,000</td>
+                            <td class="currency">$5,825,550</td>
+                            <td class="currency">$32,450,550</td>
+                            <td class="currency">$77,180,550</td>
+                            <td class="currency">$226,280,550</td>
+                            <td class="currency">$492,530,550</td>
+                        </tr>
+                        <tr>
+                            <td>Tricycle Swap Revenue</td>
+                            <td class="currency">$142,000</td>
+                            <td class="currency">$3,883,700</td>
+                            <td class="currency">$21,633,700</td>
+                            <td class="currency">$51,453,700</td>
+                            <td class="currency">$150,853,700</td>
+                            <td class="currency">$328,353,700</td>
+                        </tr>
+                        <tr>
+                            <td>Bike Swap Revenue</td>
+                            <td class="currency">$71,000</td>
+                            <td class="currency">$1,941,850</td>
+                            <td class="currency">$10,816,850</td>
+                            <td class="currency">$25,726,850</td>
+                            <td class="currency">$75,426,850</td>
+                            <td class="currency">$164,176,850</td>
+                        </tr>
+                        <tr style="background: #ffe8e8;">
+                            <td><strong>OPERATING EXPENSES</strong></td>
+                            <td class="currency">$210,278</td>
+                            <td class="currency">$4,880,510</td>
+                            <td class="currency">$27,183,902</td>
+                            <td class="currency">$64,653,851</td>
+                            <td class="currency">$189,551,051</td>
+                            <td class="currency">$412,984,394</td>
+                        </tr>
+                        <tr>
+                            <td>Energy Costs</td>
+                            <td class="currency">$14,200</td>
+                            <td class="currency">$388,370</td>
+                            <td class="currency">$2,163,370</td>
+                            <td class="currency">$5,145,370</td>
+                            <td class="currency">$15,085,370</td>
+                            <td class="currency">$32,835,370</td>
+                        </tr>
+                        <tr>
+                            <td>Battery Lease Costs</td>
+                            <td class="currency">$151,578</td>
+                            <td class="currency">$4,145,862</td>
+                            <td class="currency">$23,093,004</td>
+                            <td class="currency">$54,924,453</td>
+                            <td class="currency">$161,026,653</td>
+                            <td class="currency">$350,897,496</td>
+                        </tr>
+                        <tr>
+                            <td>Station Operating Expenses</td>
+                            <td class="currency">$2,000</td>
+                            <td class="currency">$55,000</td>
+                            <td class="currency">$305,000</td>
+                            <td class="currency">$725,000</td>
+                            <td class="currency">$2,125,000</td>
+                            <td class="currency">$4,625,000</td>
+                        </tr>
+                        <tr>
+                            <td>Overhead Expenses</td>
+                            <td class="currency">$42,500</td>
+                            <td class="currency">$291,278</td>
+                            <td class="currency">$1,622,528</td>
+                            <td class="currency">$3,859,028</td>
+                            <td class="currency">$11,314,028</td>
+                            <td class="currency">$24,626,528</td>
+                        </tr>
+                        <tr style="background: #e8f4fd;">
+                            <td><strong>EBITDA</strong></td>
+                            <td class="currency">$2,722</td>
+                            <td class="currency">$945,040</td>
+                            <td class="currency">$5,266,648</td>
+                            <td class="currency">$12,526,699</td>
+                            <td class="currency">$36,729,499</td>
+                            <td class="currency">$79,546,156</td>
+                        </tr>
+                        <tr>
+                            <td>EBITDA Margin</td>
+                            <td>1.3%</td>
+                            <td>16.2%</td>
+                            <td>16.2%</td>
+                            <td>16.2%</td>
+                            <td>16.2%</td>
+                            <td>16.2%</td>
+                        </tr>
+                        <tr>
+                            <td>Depreciation & Amortization</td>
+                            <td class="currency">$7,200</td>
+                            <td class="currency">$198,000</td>
+                            <td class="currency">$1,098,000</td>
+                            <td class="currency">$2,610,000</td>
+                            <td class="currency">$7,650,000</td>
+                            <td class="currency">$16,650,000</td>
+                        </tr>
+                        <tr style="background: #f0f8e8;">
+                            <td><strong>EBIT (Operating Income)</strong></td>
+                            <td class="negative">-$4,478</td>
+                            <td class="currency">$747,040</td>
+                            <td class="currency">$4,168,648</td>
+                            <td class="currency">$9,916,699</td>
+                            <td class="currency">$29,079,499</td>
+                            <td class="currency">$62,896,156</td>
+                        </tr>
+                        <tr>
+                            <td>Interest Expense</td>
+                            <td class="currency">$0</td>
+                            <td class="currency">$0</td>
+                            <td class="currency">$0</td>
+                            <td class="currency">$0</td>
+                            <td class="currency">$0</td>
+                            <td class="currency">$0</td>
+                        </tr>
+                        <tr>
+                            <td>Income Tax (0% - Tax Holiday)</td>
+                            <td class="currency">$0</td>
+                            <td class="currency">$0</td>
+                            <td class="currency">$0</td>
+                            <td class="currency">$0</td>
+                            <td class="currency">$0</td>
+                            <td class="currency">$0</td>
+                        </tr>
+                        <tr style="background: #d4edda;">
+                            <td><strong>NET INCOME</strong></td>
+                            <td class="negative">-$4,478</td>
+                            <td class="currency">$747,040</td>
+                            <td class="currency">$4,168,648</td>
+                            <td class="currency">$9,916,699</td>
+                            <td class="currency">$29,079,499</td>
+                            <td class="currency">$62,896,156</td>
+                        </tr>
+                        <tr>
+                            <td>Net Margin</td>
+                            <td class="negative">-2.1%</td>
+                            <td>12.8%</td>
+                            <td>12.8%</td>
+                            <td>12.8%</td>
+                            <td>12.9%</td>
+                            <td>12.8%</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="assumptions">
+                    <h3>📊 Key Financial Highlights</h3>
+                    <ul>
+                        <li><strong>Revenue Growth:</strong> From $213K to $492.5M over 6 years</li>
+                        <li><strong>EBITDA Margins:</strong> Stabilize at 16.2% from Year 2 onwards</li>
+                        <li><strong>Profitability:</strong> Achieves profitability in Year 2</li>
+                        <li><strong>Tax Benefits:</strong> 0% tax rate during 3+2 year tax holiday</li>
+                        <li><strong>Scalability:</strong> Strong unit economics driving margin consistency</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Cash Flow Sheet -->
+            <div id="cashflow" class="sheet">
+                <h2 class="section-title">Cash Flow Analysis - Without External Funding</h2>
+                
+                <table class="excel-table">
+                    <thead>
+                        <tr>
+                            <th>Cash Flow Statement (USD)</th>
+                            <th>Year 1</th>
+                            <th>Year 2</th>
+                            <th>Year 3</th>
+                            <th>Year 4</th>
+                            <th>Year 5</th>
+                            <th>Year 6</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background: #e8f5e8;">
+                            <td><strong>OPERATING CASH FLOW</strong></td>
+                            <td class="currency">$2,722</td>
+                            <td class="currency">$945,040</td>
+                            <td class="currency">$5,266,648</td>
+                            <td class="currency">$12,526,699</td>
+                            <td class="currency">$36,729,499</td>
+                            <td class="currency">$79,546,156</td>
+                        </tr>
+                        <tr>
+                            <td>Net Income</td>
+                            <td class="negative">-$4,478</td>
+                            <td class="currency">$747,040</td>
+                            <td class="currency">$4,168,648</td>
+                            <td class="currency">$9,916,699</td>
+                            <td class="currency">$29,079,499</td>
+                            <td class="currency">$62,896,156</td>
+                        </tr>
+                        <tr>
+                            <td>Add: Depreciation</td>
+                            <td class="currency">$7,200</td>
+                            <td class="currency">$198,000</td>
+                            <td class="currency">$1,098,000</td>
+                            <td class="currency">$2,610,000</td>
+                            <td class="currency">$7,650,000</td>
+                            <td class="currency">$16,650,000</td>
+                        </tr>
+                        <tr style="background: #ffe8e8;">
+                            <td><strong>INVESTING CASH FLOW</strong></td>
+                            <td class="negative">-$36,000</td>
+                            <td class="negative">-$954,000</td>
+                            <td class="negative">-$4,500,000</td>
+                            <td class="negative">-$7,560,000</td>
+                            <td class="negative">-$25,200,000</td>
+                            <td class="negative">-$45,000,000</td>
+                        </tr>
+                        <tr>
+                            <td>Station CapEx</td>
+                            <td class="negative">-$36,000</td>
+                            <td class="negative">-$954,000</td>
+                            <td class="negative">-$4,500,000</td>
+                            <td class="negative">-$7,560,000</td>
+                            <td class="negative">-$25,200,000</td>
+                            <td class="negative">-$45,000,000</td>
+                        </tr>
+                        <tr style="background: #e8f4fd;">
+                            <td><strong>FINANCING CASH FLOW</strong></td>
+                            <td class="negative">-$38,475</td>
+                            <td class="negative">-$1,052,334</td>
+                            <td class="negative">-$5,825,234</td>
+                            <td class="negative">-$12,889,125</td>
+                            <td class="negative">-$35,012,250</td>
+                            <td class="negative">-$75,026,250</td>
+                        </tr>
+                        <tr>
+                            <td>Battery Deposits (15%)</td>
+                            <td class="negative">-$38,475</td>
+                            <td class="negative">-$1,052,334</td>
+                            <td class="negative">-$5,825,234</td>
+                            <td class="negative">-$12,889,125</td>
+                            <td class="negative">-$35,012,250</td>
+                            <td class="negative">-$75,026,250</td>
+                        </tr>
+                        <tr style="background: #f8f9fa;">
+                            <td><strong>NET CASH FLOW</strong></td>
+                            <td class="negative">-$71,753</td>
+                            <td class="negative">-$1,061,294</td>
+                            <td class="negative">-$5,058,586</td>
+                            <td class="negative">-$7,922,426</td>
+                            <td class="negative">-$23,482,751</td>
+                            <td class="negative">-$40,480,094</td>
+                        </tr>
+                        <tr style="background: #d1ecf1;">
+                            <td><strong>CUMULATIVE CASH</strong></td>
+                            <td class="negative">-$71,753</td>
+                            <td class="negative">-$1,133,047</td>
+                            <td class="negative">-$6,191,633</td>
+                            <td class="negative">-$14,114,059</td>
+                            <td class="negative">-$37,596,810</td>
+                            <td class="negative">-$78,076,904</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="assumptions">
+                    <h3>📊 Cash Flow Analysis Insights</h3>
+                    <ul>
+                        <li><strong>Operating Cash Flow:</strong> Turns positive in Year 1 and grows exponentially with scale</li>
+                        <li><strong>Investing Cash Flow:</strong> Significant capital requirements for station infrastructure</li>
+                        <li><strong>Financing Cash Flow:</strong> Battery deposits create substantial cash outflows</li>
+                        <li><strong>Funding Gap:</strong> $78.1M cumulative deficit by Year 6 without external funding</li>
+                        <li><strong>Key Challenge:</strong> Timing mismatch between revenue growth and capital requirements</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Funding Requirements Sheet -->
+            <div id="funding" class="sheet">
+                <h2 class="section-title">💰 Funding Requirements & Investment Strategy</h2>
+                
+                <div class="assumptions">
+                    <h3>Funding Overview</h3>
+                    <p>Fortune Cleantech requires strategic external funding to bridge cash deficits created by rapid expansion and battery deposit requirements. The business demonstrates strong unit economics but needs capital to scale infrastructure and battery inventory.</p>
+                    <ul>
+                        <li><strong>Total Funding Required:</strong> $85.1M - $96.1M across 6 rounds</li>
+                        <li><strong>Cash Flow Positive:</strong> Year 2 operationally, Year 7+ with funding</li>
+                        <li><strong>Primary Use:</strong> Battery deposits (65%), Infrastructure (25%), Working Capital (10%)</li>
+                        <li><strong>ROI Timeline:</strong> Break-even by Year 3, strong returns post-Year 4</li>
+                    </ul>
+                </div>
+
+                <h3>Cash Deficit Analysis (Without External Funding)</h3>
+                <table class="excel-table">
+                    <thead>
+                        <tr>
+                            <th>Year</th>
+                            <th>Operating Cash Flow</th>
+                            <th>Investing Cash Flow</th>
+                            <th>Financing Cash Flow</th>
+                            <th>Net Cash Flow</th>
+                            <th>Cumulative Cash Deficit</th>
+                            <th>Deficit Growth</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td class="currency">$2,722</td>
+                            <td class="negative">-$36,000</td>
+                            <td class="negative">-$38,475</td>
+                            <td class="negative">-$71,753</td>
+                            <td class="negative">-$71,753</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td class="currency">$945,040</td>
+                            <td class="negative">-$954,000</td>
+                            <td class="negative">-$1,052,334</td>
+                            <td class="negative">-$1,061,294</td>
+                            <td class="negative">-$1,133,047</td>
+                            <td class="negative">1,479%</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td class="currency">$5,266,648</td>
+                            <td class="negative">-$4,500,000</td>
+                            <td class="negative">-$5,825,234</td>
+                            <td class="negative">-$5,058,586</td>
+                            <td class="negative">-$6,191,633</td>
+                            <td class="negative">446%</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td class="currency">$12,526,699</td>
+                            <td class="negative">-$7,560,000</td>
+                            <td class="negative">-$12,889,125</td>
+                            <td class="negative">-$7,922,426</td>
+                            <td class="negative">-$14,114,059</td>
+                            <td class="negative">128%</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td class="currency">$36,729,499</td>
+                            <td class="negative">-$25,200,000</td>
+                            <td class="negative">-$35,012,250</td>
+                            <td class="negative">-$23,482,751</td>
+                            <td class="negative">-$37,596,810</td>
+                            <td class="negative">166%</td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td class="currency">$79,546,156</td>
+                            <td class="negative">-$45,000,000</td>
+                            <td class="negative">-$75,026,250</td>
+                            <td class="negative">-$40,480,094</td>
+                            <td class="negative">-$78,076,904</td>
+                            <td class="negative">108%</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Funding Timeline & Investment Rounds</h3>
+                <table class="excel-table">
+                    <thead>
+                        <tr>
+                            <th>Round</th>
+                            <th>Year</th>
+                            <th>Stage</th>
+                            <th>Cash Deficit</th>
+                            <th>Recommended Raise</th>
+                            <th>Buffer %</th>
+                            <th>Primary Use of Funds</th>
+                            <th>Key Milestones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>Angel/Pre-Seed</td>
+                            <td class="negative">$71,753</td>
+                            <td class="currency">$190,000</td>
+                            <td>165%</td>
+                            <td>Initial setup, pilot stations</td>
+                            <td>4 stations, 200 EVs</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>2</td>
+                            <td>Pre-Seed</td>
+                            <td class="negative">$1,061,294</td>
+                            <td class="currency">$1,100,000</td>
+                            <td>4%</td>
+                            <td>Battery inventory, expansion</td>
+                            <td>110 stations, 5,470 EVs</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>3</td>
+                            <td>Seed</td>
+                            <td class="negative">$5,058,586</td>
+                            <td class="currency">$6,000,000</td>
+                            <td>19%</td>
+                            <td>Rapid scaling, market expansion</td>
+                            <td>610 stations, 30,470 EVs</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>4</td>
+                            <td>Series A</td>
+                            <td class="negative">$7,922,426</td>
+                            <td class="currency">$9,000,000</td>
+                            <td>14%</td>
+                            <td>Market leadership, optimization</td>
+                            <td>1,450 stations, 72,470 EVs</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>5</td>
+                            <td>Pre-Series B</td>
+                            <td class="negative">$23,482,751</td>
+                            <td class="currency">$27,500,000</td>
+                            <td>17%</td>
+                            <td>National expansion, tech upgrade</td>
+                            <td>4,250 stations, 212,470 EVs</td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>6</td>
+                            <td>Series C/Growth</td>
+                            <td class="negative">$40,480,094</td>
+                            <td class="currency">$47,500,000</td>
+                            <td>17%</td>
+                            <td>Market dominance, profitability</td>
+                            <td>9,250 stations, 462,470 EVs</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Post-Funding Cash Flow Analysis</h3>
+                <table class="excel-table">
+                    <thead>
+                        <tr>
+                            <th>Year</th>
+                            <th>Operating CF</th>
+                            <th>Investing CF</th>
+                            <th>Financing CF</th>
+                            <th>Funding Raised</th>
+                            <th>Net Cash Flow</th>
+                            <th>Cumulative Cash</th>
+                            <th>Cash Runway (Months)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td class="currency">$2,722</td>
+                            <td class="negative">-$36,000</td>
+                            <td class="negative">-$38,475</td>
+                            <td class="currency">$190,000</td>
+                            <td class="currency">$118,247</td>
+                            <td class="currency">$118,247</td>
+                            <td>18.2</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td class="currency">$945,040</td>
+                            <td class="negative">-$954,000</td>
+                            <td class="negative">-$1,052,334</td>
+                            <td class="currency">$1,100,000</td>
+                            <td class="currency">$38,706</td>
+                            <td class="currency">$156,953</td>
+                            <td>12.4</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td class="currency">$5,266,648</td>
+                            <td class="negative">-$4,500,000</td>
+                            <td class="negative">-$5,825,234</td>
+                            <td class="currency">$6,000,000</td>
+                            <td class="currency">$941,414</td>
+                            <td class="currency">$1,098,367</td>
+                            <td>15.8</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td class="currency">$12,526,699</td>
+                            <td class="negative">-$7,560,000</td>
+                            <td class="negative">-$12,889,125</td>
+                            <td class="currency">$9,000,000</td>
+                            <td class="currency">$1,077,574</td>
+                            <td class="currency">$2,175,941</td>
+                            <td>14.2</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td class="currency">$36,729,499</td>
+                            <td class="negative">-$25,200,000</td>
+                            <td class="negative">-$35,012,250</td>
+                            <td class="currency">$27,500,000</td>
+                            <td class="currency">$4,017,249</td>
+                            <td class="currency">$6,193,190</td>
+                            <td>16.8</td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td class="currency">$79,546,156</td>
+                            <td class="negative">-$45,000,000</td>
+                            <td class="negative">-$75,026,250</td>
+                            <td class="currency">$47,500,000</td>
+                            <td class="currency">$7,019,906</td>
+                            <td class="currency">$13,213,096</td>
+                            <td>19.2</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Funding Sources & Strategy</h3>
+                <div class="assumptions">
+                    <h4>Angel ($190K - Year 1)</h4>
+                    <ul>
+                        <li><strong>Target Investors:</strong> Angel investors, cleantech VCs, Nigerian diaspora</li>
+                        <li><strong>Equity Range:</strong> 15-20%</li>
+                        <li><strong>Key Metrics:</strong> Proof of concept, initial customer traction</li>
+                        <li><strong>Use of Funds:</strong> Pilot stations (4), initial battery inventory (450 units)</li>
+                    </ul>
+                    
+                    <h4>Pre-Seed ($1.1M - Year 2)</h4>
+                    <ul>
+                        <li><strong>Target Investors:</strong> Seed VCs, strategic partners, development finance</li>
+                        <li><strong>Equity Range:</strong> 15-20%</li>
+                        <li><strong>Key Metrics:</strong> 200 EVs onboarded, revenue growth</li>
+                        <li><strong>Use of Funds:</strong> Market expansion, operational scaling</li>
+                    </ul>
+                    
+                    <h4>Seed ($6M - Year 3)</h4>
+                    <ul>
+                        <li><strong>Target Investors:</strong> Tier 1 VCs, corporate VCs, impact investors</li>
+                        <li><strong>Equity Range:</strong> 10-15%</li>
+                        <li><strong>Key Metrics:</strong> Market leadership, clear unit economics</li>
+                        <li><strong>Use of Funds:</strong> Rapid scaling, technology development</li>
+                    </ul>
+                    
+                    <h4>Series A+ ($83.5M total - Years 4-6)</h4>
+                    <ul>
+                        <li><strong>Target Investors:</strong> Growth equity, sovereign wealth funds</li>
+                        <li><strong>Equity Range:</strong> 20-25% cumulative</li>
+                        <li><strong>Focus:</strong> Market dominance, profitability, expansion readiness</li>
+                    </ul>
+                </div>
+
+                <h3>Risk Mitigation & Contingency Planning</h3>
+                <table class="excel-table">
+                    <thead>
+                        <tr>
+                            <th>Scenario</th>
+                            <th>Impact on Funding</th>
+                            <th>Mitigation Strategy</th>
+                            <th>Additional Funding Required</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>50% Slower Adoption</td>
+                            <td class="negative">+$15-20M</td>
+                            <td>Extended runway, pivot strategy</td>
+                            <td>$15M contingency fund</td>
+                        </tr>
+                        <tr>
+                            <td>20% Currency Devaluation</td>
+                            <td class="negative">+$10-15M</td>
+                            <td>Local sourcing, hedging</td>
+                            <td>$12M forex buffer</td>
+                        </tr>
+                        <tr>
+                            <td>Regulatory Changes</td>
+                            <td class="negative">+$5-10M</td>
+                            <td>Government relations, compliance</td>
+                            <td>$7M regulatory reserve</td>
+                        </tr>
+                        <tr>
+                            <td>Competition Entry</td>
+                            <td class="negative">+$10-15M</td>
+                            <td>Accelerated expansion, R&D</td>
+                            <td>$12M competitive fund</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="assumptions">
+                    <h3>Investment Highlights</h3>
+                    <ul>
+                        <li><strong>Clear Value Proposition:</strong> 28-33% cost savings for drivers</li>
+                        <li><strong>Scalable Model:</strong> Network effects and operational leverage</li>
+                        <li><strong>Large Market:</strong> $4.74B global battery swapping market</li>
+                        <li><strong>Strong Unit Economics:</strong> 16.2% EBITDA margins at scale</li>
+                        <li><strong>Experienced Team:</strong> Domain expertise in cleantech and mobility</li>
+                        <li><strong>Strategic Partnerships:</strong> OEM relationships, government support</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Cost Comparison Sheet -->
+            <div id="comparison" class="sheet">
+                <h2 class="section-title">💰 Driver Cost Comparison Analysis</h2>
+                
+                <div class="assumptions">
+                    <h3>🚗 Petrol Vehicle Operating Costs</h3>
+                    <p style="color: #6c757d; margin-bottom: 20px;">Detailed breakdown of daily operating expenses for traditional petrol vehicles</p>
+                </div>
+                
+                <table class="excel-table">
+                    <thead>
+                        <tr>
+                            <th>Vehicle Type</th>
+                            <th>Daily Fuel Cost</th>
+                            <th>Daily Maintenance</th>
+                            <th>Total Daily Cost</th>
+                            <th>Cost per KM</th>
+                            <th>Daily Revenue</th>
+                            <th>Net Daily Earnings</th>
+                            <th>Annual Net Earnings</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Tricycles</strong></td>
+                            <td class="currency">$5.70</td>
+                            <td class="currency">$0.25</td>
+                            <td class="currency">$5.95</td>
+                            <td class="currency">$0.0298</td>
+                            <td class="currency">$15.63</td>
+                            <td class="currency">$9.68</td>
+                            <td class="currency">$3,436.40</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Bikes</strong></td>
+                            <td class="currency">$2.53</td>
+                            <td class="currency">$0.25</td>
+                            <td class="currency">$2.78</td>
+                            <td class="currency">$0.0139</td>
+                            <td class="currency">$7.50</td>
+                            <td class="currency">$4.72</td>
+                            <td class="currency">$1,675.60</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="assumptions" style="margin: 30px 0;">
+                    <h3>⚡ EV Operating Costs (Battery Swapping)</h3>
+                    <p style="color: #6c757d; margin-bottom: 20px;">Revolutionary cost structure with battery swapping - no fuel, minimal maintenance</p>
+                </div>
+                
+                <table class="excel-table">
+                    <thead>
+                        <tr>
+                            <th>Vehicle Type</th>
+                            <th>Daily Swap Cost</th>
+                            <th>Daily Maintenance</th>
+                            <th>Total Daily Cost</th>
+                            <th>Cost per KM</th>
+                            <th>Daily Revenue</th>
+                            <th>Net Daily Earnings</th>
+                            <th>Annual Net Earnings</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>EV Tricycles</strong></td>
+                            <td class="currency">$4.00</td>
+                            <td class="currency">$0.00</td>
+                            <td class="currency">$4.00</td>
+                            <td class="currency">$0.0200</td>
+                            <td class="currency">$15.63</td>
+                            <td class="currency">$11.63</td>
+                            <td class="currency">$4,128.65</td>
+                        </tr>
+                        <tr>
+                            <td><strong>EV Bikes</strong></td>
+                            <td class="currency">$2.00</td>
+                            <td class="currency">$0.00</td>
+                            <td class="currency">$2.00</td>
+                            <td class="currency">$0.0100</td>
+                            <td class="currency">$7.50</td>
+                            <td class="currency">$5.50</td>
+                            <td class="currency">$1,952.50</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="section-title">📊 Savings Analysis & Impact</div>
+                
+                <table class="excel-table">
+                    <thead>
+                        <tr>
+                            <th>Vehicle Type</th>
+                            <th>Petrol Cost/KM</th>
+                            <th>EV Cost/KM</th>
+                            <th>Cost Reduction/KM</th>
+                            <th>% Cost Reduction</th>
+                            <th>Daily Savings</th>
+                            <th>Annual Savings</th>
+                            <th>ROI Impact</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Tricycles</strong></td>
+                            <td class="currency">$0.0298</td>
+                            <td class="currency">$0.0200</td>
+                            <td class="currency">$0.0098</td>
+                            <td style="color: #28a745; font-weight: bold;">32.9%</td>
+                            <td class="currency">$1.95</td>
+                            <td class="currency">$692.25</td>
+                            <td style="color: #28a745; font-weight: bold;">20.1% Higher Earnings</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Bikes</strong></td>
+                            <td class="currency">$0.0139</td>
+                            <td class="currency">$0.0100</td>
+                            <td class="currency">$0.0039</td>
+                            <td style="color: #28a745; font-weight: bold;">28.1%</td>
+                            <td class="currency">$0.78</td>
+                            <td class="currency">$276.90</td>
+                            <td style="color: #28a745; font-weight: bold;">16.5% Higher Earnings</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="assumptions" style="margin: 30px 0;">
+                    <h3>🎯 Key Value Propositions for Drivers</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin: 15px 0;">
+                        <div style="background: #e8f5e8; padding: 15px; border-radius: 8px; border-left: 4px solid #28a745;">
+                            <h4 style="color: #28a745; margin-top: 0;">💡 Operational Benefits</h4>
+                            <ul style="margin: 0;">
+                                <li>Zero fuel purchase requirements</li>
+                                <li>Predictable daily operating costs</li>
+                                <li>No engine maintenance expenses</li>
+                                <li>Quick 2-minute battery swaps</li>
+                                <li>Always fully charged batteries</li>
+                            </ul>
+                        </div>
+                        <div style="background: #e3f2fd; padding: 15px; border-radius: 8px; border-left: 4px solid #2196f3;">
+                            <h4 style="color: #2196f3; margin-top: 0;">📈 Financial Benefits</h4>
+                            <ul style="margin: 0;">
+                                <li>28-33% reduction in cost per kilometer</li>
+                                <li>16-20% increase in net earnings</li>
+                                <li>$277-$692 additional annual income</li>
+                                <li>Elimination of fuel price volatility</li>
+                                <li>Lower total cost of ownership</li>
+                            </ul>
+                        </div>
+                        <div style="background: #fff3e0; padding: 15px; border-radius: 8px; border-left: 4px solid #ff9800;">
+                            <h4 style="color: #ff9800; margin-top: 0;">🌍 Environmental Impact</h4>
+                            <ul style="margin: 0;">
+                                <li>Zero direct emissions</li>
+                                <li>Reduced air pollution</li>
+                                <li>Lower noise pollution</li>
+                                <li>Sustainable transportation</li>
+                                <li>Climate change mitigation</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="assumptions">
+                    <h3>🔍 Cost Structure Breakdown (Per 200km Daily Operation)</h3>
+                    <div style="overflow-x: auto;">
+                        <table class="excel-table" style="margin: 15px 0;">
+                            <thead>
+                                <tr>
+                                    <th rowspan="2">Cost Component</th>
+                                    <th colspan="2">Petrol Tricycles</th>
+                                    <th colspan="2">EV Tricycles</th>
+                                    <th colspan="2">Petrol Bikes</th>
+                                    <th colspan="2">EV Bikes</th>
+                                </tr>
+                                <tr>
+                                    <th>Daily</th>
+                                    <th>Annual</th>
+                                    <th>Daily</th>
+                                    <th>Annual</th>
+                                    <th>Daily</th>
+                                    <th>Annual</th>
+                                    <th>Daily</th>
+                                    <th>Annual</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Fuel/Energy</strong></td>
+                                    <td class="currency">$5.70</td>
+                                    <td class="currency">$2,023.50</td>
+                                    <td class="currency">$4.00</td>
+                                    <td class="currency">$1,420.00</td>
+                                    <td class="currency">$2.53</td>
+                                    <td class="currency">$898.15</td>
+                                    <td class="currency">$2.00</td>
+                                    <td class="currency">$710.00</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Maintenance</strong></td>
+                                    <td class="currency">$0.25</td>
+                                    <td class="currency">$88.75</td>
+                                    <td class="currency">$0.00</td>
+                                    <td class="currency">$0.00</td>
+                                    <td class="currency">$0.25</td>
+                                    <td class="currency">$88.75</td>
+                                    <td class="currency">$0.00</td>
+                                    <td class="currency">$0.00</td>
+                                </tr>
+                                <tr style="background: #f0f8ff; font-weight: bold;">
+                                    <td><strong>Total Operating Cost</strong></td>
+                                    <td class="currency">$5.95</td>
+                                    <td class="currency">$2,112.25</td>
+                                    <td class="currency">$4.00</td>
+                                    <td class="currency">$1,420.00</td>
+                                    <td class="currency">$2.78</td>
+                                    <td class="currency">$986.90</td>
+                                    <td class="currency">$2.00</td>
+                                    <td class="currency">$710.00</td>
+                                </tr>
+                                <tr style="background: #e8f5e8; font-weight: bold; color: #28a745;">
+                                    <td><strong>Annual Savings</strong></td>
+                                    <td colspan="2" style="text-align: center;">-</td>
+                                    <td colspan="2" style="text-align: center;">$692.25</td>
+                                    <td colspan="2" style="text-align: center;">-</td>
+                                    <td colspan="2" style="text-align: center;">$276.90</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sensitivity Analysis Sheet -->
+            <div id="sensitivity" class="sheet">
+                <h2 class="section-title">📉 Sensitivity Analysis & Risk Assessment</h2>
+                
+                <div class="assumptions">
+                    <h3>🔍 Scenario Analysis Overview</h3>
+                    <p>Analysis of how different EV adoption rates, currency fluctuations, and market conditions impact financial performance and funding requirements.</p>
+                </div>
+                
+                <div class="section-title" style="font-size: 1.2em; margin: 25px 0 15px 0;">Adoption Rate Scenarios</div>
+                <table class="excel-table">
+                    <thead>
+                        <tr>
+                            <th>Scenario</th>
+                            <th>Year 1 EVs</th>
+                            <th>Year 6 EVs</th>
+                            <th>Year 6 Revenue</th>
+                            <th>Funding Required</th>
+                            <th>EBITDA Margin</th>
+                            <th>Key Implications</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Pessimistic (50%)</strong></td>
+                            <td>100</td>
+                            <td>231,235</td>
+                            <td class="currency">$246.3M</td>
+                            <td class="currency">$42.5M</td>
+                            <td>16.1%</td>
+                            <td>Slower growth but still viable</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Base Case (100%)</strong></td>
+                            <td>200</td>
+                            <td>462,470</td>
+                            <td class="currency">$492.5M</td>
+                            <td class="currency">$85.1M</td>
+                            <td>16.2%</td>
+                            <td>Target market penetration</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Optimistic (150%)</strong></td>
+                            <td>300</td>
+                            <td>693,705</td>
+                            <td class="currency">$738.8M</td>
+                            <td class="currency">$127.7M</td>
+                            <td>16.2%</td>
+                            <td>Market leadership position</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="section-title" style="font-size: 1.2em; margin: 25px 0 15px 0;">Currency Risk Analysis (₦/$ Exchange Rate)</div>
+                <table class="excel-table">
+                    <thead>
+                        <tr>
+                            <th>Scenario</th>
+                            <th>Exchange Rate</th>
+                            <th>Battery Cost</th>
+                            <th>Year 6 EBITDA</th>
+                            <th>EBITDA Impact</th>
+                            <th>Mitigation Strategy</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Current</strong></td>
+                            <td>₦1,600/$</td>
+                            <td class="currency">$570</td>
+                            <td class="currency">$79.5M</td>
+                            <td>Base Case</td>
+                            <td>N/A</td>
+                        </tr>
+                        <tr>
+                            <td><strong>10% Devaluation</strong></td>
+                            <td>₦1,760/$</td>
+                            <td class="currency">$627</td>
+                            <td class="currency">$75.2M</td>
+                            <td class="negative">-5.4%</td>
+                            <td>Hedging, local sourcing</td>
+                        </tr>
+                        <tr>
+                            <td><strong>20% Devaluation</strong></td>
+                            <td>₦1,920/$</td>
+                            <td class="currency">$684</td>
+                            <td class="currency">$70.9M</td>
+                            <td class="negative">-10.8%</td>
+                            <td>Price adjustments, cost controls</td>
+                        </tr>
+                        <tr>
+                            <td><strong>30% Devaluation</strong></td>
+                            <td>₦2,080/$</td>
+                            <td class="currency">$741</td>
+                            <td class="currency">$66.6M</td>
+                            <td class="negative">-16.2%</td>
+                            <td>Dual pricing, revenue diversification</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="section-title" style="font-size: 1.2em; margin: 25px 0 15px 0;">Energy Cost Sensitivity</div>
+                <table class="excel-table">
+                    <thead>
+                        <tr>
+                            <th>Scenario</th>
+                            <th>Cost per kWh</th>
+                            <th>Year 6 Energy Cost</th>
+                            <th>Year 6 EBITDA</th>
+                            <th>EBITDA Impact</th>
+                            <th>Mitigation Strategy</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Current</strong></td>
+                            <td class="currency">$0.04</td>
+                            <td class="currency">$32.8M</td>
+                            <td class="currency">$79.5M</td>
+                            <td>Base Case</td>
+                            <td>N/A</td>
+                        </tr>
+                        <tr>
+                            <td><strong>25% Increase</strong></td>
+                            <td class="currency">$0.05</td>
+                            <td class="currency">$41.0M</td>
+                            <td class="currency">$71.3M</td>
+                            <td class="negative">-10.3%</td>
+                            <td>Efficiency improvements</td>
+                        </tr>
+                        <tr>
+                            <td><strong>50% Increase</strong></td>
+                            <td class="currency">$0.06</td>
+                            <td class="currency">$49.3M</td>
+                            <td class="currency">$63.0M</td>
+                            <td class="negative">-20.7%</td>
+                            <td>Renewable energy integration</td>
+                        </tr>
+                        <tr>
+                            <td><strong>100% Increase</strong></td>
+                            <td class="currency">$0.08</td>
+                            <td class="currency">$65.7M</td>
+                            <td class="currency">$46.6M</td>
+                            <td class="negative">-41.4%</td>
+                            <td>Pass-through pricing model</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="section-title" style="font-size: 1.2em; margin: 25px 0 15px 0;">IFRS Compliance Framework</div>
+                <table class="excel-table">
+                    <thead>
+                        <tr>
+                            <th>Standard</th>
+                            <th>Application</th>
+                            <th>Key Requirements</th>
+                            <th>Implementation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>IFRS 15</strong></td>
+                            <td>Revenue Recognition</td>
+                            <td>Swap revenue at point of service delivery</td>
+                            <td>Clear performance obligations defined</td>
+                        </tr>
+                        <tr>
+                            <td><strong>IFRS 16</strong></td>
+                            <td>Lease Accounting</td>
+                            <td>Battery leases recorded at NPV</td>
+                            <td>24-month lease terms with reuse provisions</td>
+                        </tr>
+                        <tr>
+                            <td><strong>IAS 16</strong></td>
+                            <td>Property, Plant & Equipment</td>
+                            <td>Swap stations depreciated over 5 years</td>
+                            <td>Regular impairment assessments</td>
+                        </tr>
+                        <tr>
+                            <td><strong>IAS 12</strong></td>
+                            <td>Income Taxes</td>
+                            <td>0% tax rate during tax holiday</td>
+                            <td>Future tax liability provisions</td>
+                        </tr>
+                        <tr>
+                            <td><strong>IAS 1</strong></td>
+                            <td>Financial Statement Presentation</td>
+                            <td>Comprehensive disclosures</td>
+                            <td>Transparent risk and going concern reporting</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="assumptions">
+                    <h3>🎯 Key Risk Management Strategies</h3>
+                    <ul>
+                        <li><strong>Currency Risk:</strong> Maintain 10-15% of funding in forex buffers, explore local battery assembly</li>
+                        <li><strong>Adoption Risk:</strong> Implement aggressive driver incentive programs and partnerships</li>
+                        <li><strong>Energy Risk:</strong> Develop solar-powered stations to reduce grid dependency</li>
+                        <li><strong>Regulatory Risk:</strong> Engage policymakers early for favorable EV regulations</li>
+                        <li><strong>Competitive Risk:</strong> Build strong brand loyalty through superior service and technology</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>© 2025 Fortune Cleantech BaaS. All rights reserved               (email: ceo@fortunecleantech.com)</p>
+            <p style="font-size: 0.9em; opacity: 0.8;">Confidential Financial Model - For Investor Review Only</p>
+        </div>
+    </div>
+
+    <script>
+        // Tab switching functionality
+        function showSheet(sheetId) {
+            // Hide all sheets
+            const sheets = document.querySelectorAll('.sheet');
+            sheets.forEach(sheet => {
+                sheet.classList.remove('active');
+            });
+            
+            // Show selected sheet
+            document.getElementById(sheetId).classList.add('active');
+            
+            // Update active tab
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+        }
+        
+        // Excel download functionality
+        function downloadExcel() {
+            // Create a new workbook
+            const wb = XLSX.utils.book_new();
+            
+            // Define all the sheets with their data
+            const sheets = [
+                {
+                    name: "Key Assumptions",
+                    data: [
+                        ["Key Assumptions"],
+                        ["Petrol Vehicle Baseline"],
+                        ["Tricycles", "", "Bikes"],
+                        ["Fuel Efficiency", "20 km/L", "45 km/L"],
+                        ["Fuel Cost", "₦910/L ($0.57/L)", "₦910/L ($0.57/L)"],
+                        ["Daily Range", "200 km/day", "200 km/day"],
+                        ["Operating Days", "355 days/year", "355 days/year"],
+                        ["Maintenance", "$0.25/day", "$0.25/day"],
+                        ["Driver Earnings", "₦25,000/day ($15.63/day)", "₦12,000/day ($7.50/day)"],
+                        [],
+                        ["EV Battery Swapping Model"],
+                        ["Station Operations", "", "Energy Consumption"],
+                        ["Capacity", "1 station serves 50 EVs", "Tricycles: 8 kWh/day → $113.60/EV/year"],
+                        ["Tricycle Swaps", "2/day @ $2 each = $4/day", "Bikes: 2 kWh/day → $28.40/EV/year"],
+                        ["Bike Swaps", "2/day @ $1 each = $2/day", "Average Energy Cost: $71/EV/year"],
+                        ["Operating Days", "355 days/year"],
+                        ["Energy Cost", "$0.04/kWh (Fortune absorbs)"],
+                        [],
+                        ["Battery Lease Structure"],
+                        ["Battery Cost", "$570 per battery"],
+                        ["Lease Terms", "24-month term, 30% APR"],
+                        ["Deposit", "15% ($85.50/battery)"],
+                        ["Annual Lease Cost", "$336.84 per battery"],
+                        ["Battery Requirements", "Tricycles: 3, Bikes: 1.5, Average: 2.25"],
+                        ["Battery Life", "4-year cycle with reuse capability"],
+                        [],
+                        ["Infrastructure Costs"],
+                        ["Station CapEx", "$9,000 per station"],
+                        ["Depreciation", "5-year straight-line ($1,800/year)"],
+                        ["Station OpEx", "$5,000 per 10 stations/year"],
+                        ["Exchange Rate", "₦1,600/USD"]
+                    ]
+                },
+                {
+                    name: "Scale-Up Plan",
+                    data: [
+                        ["Year", "Total EVs", "Tricycles", "Bikes", "Stations", "New Batteries", "Growth Rate"],
+                        [1, 200, 100, 100, 4, 450, "-"],
+                        [2, 5470, 2735, 2735, 110, 12308, "2635%"],
+                        [3, 30470, 15235, 15235, 610, 68108, "457%"],
+                        [4, 72470, 36235, 36235, 1450, 150750, "138%"],
+                        [5, 212470, 106235, 106235, 4250, 409500, "193%"],
+                        [6, 462470, 231235, 231235, 9250, 877500, "118%"]
+                    ]
+                },
+                {
+                    name: "Revenue Model",
+                    data: [
+                        ["Year", "Total EVs", "Tricycle Revenue", "Bike Revenue", "Total Revenue", "Growth %"],
+                        [1, 200, "$142,000", "$71,000", "$213,000", "-"],
+                        [2, 5470, "$3,883,700", "$1,941,850", "$5,825,550", "2635%"],
+                        [3, 30470, "$21,633,700", "$10,816,850", "$32,450,550", "457%"],
+                        [4, 72470, "$51,453,700", "$25,726,850", "$77,180,550", "138%"],
+                        [5, 212470, "$150,853,700", "$75,426,850", "$226,280,550", "193%"],
+                        [6, 462470, "$328,353,700", "$164,176,850", "$492,530,550", "118%"]
+                    ]
+                },
+                {
+                    name: "Cost Structure",
+                    data: [
+                        ["Year", "Energy Cost", "Battery Lease", "Station OpEx", "Overhead", "Depreciation", "Total OpEx"],
+                        [1, "$14,200", "$151,578", "$2,000", "$42,500", "$7,200", "$217,478"],
+                        [2, "$388,370", "$4,145,862", "$55,000", "$291,278", "$198,000", "$5,078,510"],
+                        [3, "$2,163,370", "$23,093,004", "$305,000", "$1,622,528", "$1,098,000", "$28,281,902"],
+                        [4, "$5,145,370", "$54,924,453", "$725,000", "$3,859,028", "$2,610,000", "$67,263,851"],
+                        [5, "$15,085,370", "$161,026,653", "$2,125,000", "$11,314,028", "$7,650,000", "$197,201,051"],
+                        [6, "$32,835,370", "$350,897,496", "$4,625,000", "$24,626,528", "$16,650,000", "$429,634,394"]
+                    ]
+                },
+                {
+                    name: "Income Statement",
+                    data: [
+                        ["Income Statement (USD)", "Year 1", "Year 2", "Year 3", "Year 4", "Year 5", "Year 6"],
+                        ["REVENUE", "$213,000", "$5,825,550", "$32,450,550", "$77,180,550", "$226,280,550", "$492,530,550"],
+                        ["Tricycle Revenue", "$142,000", "$3,883,700", "$21,633,700", "$51,453,700", "$150,853,700", "$328,353,700"],
+                        ["Bike Revenue", "$71,000", "$1,941,850", "$10,816,850", "$25,726,850", "$75,426,850", "$164,176,850"],
+                        ["OPERATING EXPENSES", "$210,278", "$4,880,510", "$27,183,902", "$64,653,851", "$189,551,051", "$412,984,394"],
+                        ["Energy Costs", "$14,200", "$388,370", "$2,163,370", "$5,145,370", "$15,085,370", "$32,835,370"],
+                        ["Battery Lease", "$151,578", "$4,145,862", "$23,093,004", "$54,924,453", "$161,026,653", "$350,897,496"],
+                        ["Station OpEx", "$2,000", "$55,000", "$305,000", "$725,000", "$2,125,000", "$4,625,000"],
+                        ["Overhead", "$42,500", "$291,278", "$1,622,528", "$3,859,028", "$11,314,028", "$24,626,528"],
+                        ["EBITDA", "$2,722", "$945,040", "$5,266,648", "$12,526,699", "$36,729,499", "$79,546,156"],
+                        ["EBITDA Margin", "1.3%", "16.2%", "16.2%", "16.2%", "16.2%", "16.2%"],
+                        ["Depreciation", "$7,200", "$198,000", "$1,098,000", "$2,610,000", "$7,650,000", "$16,650,000"],
+                        ["EBIT", "-$4,478", "$747,040", "$4,168,648", "$9,916,699", "$29,079,499", "$62,896,156"],
+                        ["Net Income", "-$4,478", "$747,040", "$4,168,648", "$9,916,699", "$29,079,499", "$62,896,156"],
+                        ["Net Margin", "-2.1%", "12.8%", "12.8%", "12.8%", "12.9%", "12.8%"]
+                    ]
+                },
+                {
+                    name: "Cash Flow",
+                    data: [
+                        ["Cash Flow Statement (USD)", "Year 1", "Year 2", "Year 3", "Year 4", "Year 5", "Year 6"],
+                        ["OPERATING CASH FLOW", "$2,722", "$945,040", "$5,266,648", "$12,526,699", "$36,729,499", "$79,546,156"],
+                        ["INVESTING CASH FLOW", "-$36,000", "-$954,000", "-$4,500,000", "-$7,560,000", "-$25,200,000", "-$45,000,000"],
+                        ["FINANCING CASH FLOW", "-$38,475", "-$1,052,334", "-$5,825,234", "-$12,889,125", "-$35,012,250", "-$75,026,250"],
+                        ["NET CASH FLOW", "-$71,753", "-$1,061,294", "-$5,058,586", "-$7,922,426", "-$23,482,751", "-$40,480,094"],
+                        ["CUMULATIVE CASH", "-$71,753", "-$1,133,047", "-$6,191,633", "-$14,114,059", "-$37,596,810", "-$78,076,904"]
+                    ]
+                },
+                {
+                    name: "Funding Requirements",
+                    data: [
+                        ["Funding Round", "Year", "Stage", "Cash Deficit", "Recommended Raise", "Buffer %"],
+                        ["1", 1, "Angel/Pre-Seed", "$71,753", "$190,000", "165%"],
+                        ["2", 2, "Pre-Seed", "$1,061,294", "$1,100,000", "4%"],
+                        ["3", 3, "Seed", "$5,058,586", "$6,000,000", "19%"],
+                        ["4", 4, "Series A", "$7,922,426", "$9,000,000", "14%"],
+                        ["5", 5, "Pre-Series B", "$23,482,751", "$27,500,000", "17%"],
+                        ["6", 6, "Series C", "$40,480,094", "$47,500,000", "17%"],
+                        [],
+                        ["Total Funding Required:", "", "", "$78,076,904", "$85,100,000 - $96,100,000", "9-23%"]
+                    ]
+                },
+                {
+                    name: "Cost Comparison",
+                    data: [
+                        ["Vehicle Type", "Daily Cost", "Cost per KM", "Annual Cost", "Annual Savings vs Petrol"],
+                        ["Petrol Tricycles", "$5.95", "$0.0298", "$2,112.25", "-"],
+                        ["EV Tricycles", "$4.00", "$0.0200", "$1,420.00", "$692.25"],
+                        ["Petrol Bikes", "$2.78", "$0.0139", "$986.90", "-"],
+                        ["EV Bikes", "$2.00", "$0.0100", "$710.00", "$276.90"]
+                    ]
+                },
+                {
+                    name: "Sensitivity Analysis",
+                    data: [
+                        ["Scenario", "Year 6 EVs", "Year 6 Revenue", "EBITDA Margin", "Funding Impact"],
+                        ["Pessimistic (50%)", 231235, "$246.3M", "16.1%", "+$15-20M"],
+                        ["Base Case (100%)", 462470, "$492.5M", "16.2%", "Base"],
+                        ["Optimistic (150%)", 693705, "$738.8M", "16.2%", "-$10-15M"],
+                        [],
+                        ["Currency Risk", "Exchange Rate", "Battery Cost", "EBITDA Impact"],
+                        ["Current", "₦1,600/$", "$570", "Base"],
+                        ["10% Deval", "₦1,760/$", "$627", "-5.4%"],
+                        ["20% Deval", "₦1,920/$", "$684", "-10.8%"]
+                    ]
+                }
+            ];
+            
+            // Add each sheet to the workbook
+            sheets.forEach(sheet => {
+                const ws = XLSX.utils.aoa_to_sheet(sheet.data);
+                XLSX.utils.book_append_sheet(wb, ws, sheet.name);
+            });
+            
+            // Generate Excel file and trigger download
+            XLSX.writeFile(wb, 'Fortune_Cleantech_BaaS_Financial_Model.xlsx');
+        }
+        
+        // Executive Summary download functionality
+        function downloadSummary() {
+            // Create a new workbook for the summary
+            const wb = XLSX.utils.book_new();
+            
+            // Summary sheet data
+            const summaryData = [
+                ["Fortune Cleantech BaaS - Executive Summary"],
+                ["6-Year Financial Projections"],
+                [],
+                ["Key Metrics", "Year 1", "Year 2", "Year 3", "Year 4", "Year 5", "Year 6"],
+                ["Total EVs", 200, 5470, 30470, 72470, 212470, 462470],
+                ["Revenue", "$213K", "$5.8M", "$32.5M", "$77.2M", "$226.3M", "$492.5M"],
+                ["EBITDA", "$2.7K", "$945K", "$5.3M", "$12.5M", "$36.7M", "$79.5M"],
+                ["EBITDA Margin", "1.3%", "16.2%", "16.2%", "16.2%", "16.2%", "16.2%"],
+                ["Net Income", "-$4.5K", "$747K", "$4.2M", "$9.9M", "$29.1M", "$62.9M"],
+                ["Net Margin", "-2.1%", "12.8%", "12.8%", "12.8%", "12.9%", "12.8%"],
+                ["Cumulative Funding Needed", "$71.8K", "$1.1M", "$6.2M", "$14.1M", "$37.6M", "$78.1M"],
+                [],
+                ["Key Investment Highlights"],
+                ["• 28-33% operating cost reduction for drivers vs petrol vehicles"],
+                ["• Scalable infrastructure-light model with network effects"],
+                ["• $4.74B addressable market in battery swapping sector"],
+                ["• 16.2% EBITDA margins at scale with consistent unit economics"],
+                ["• Experienced team with cleantech and mobility expertise"],
+                [],
+                ["Funding Requirements"],
+                ["Stage", "Year", "Amount", "Key Use of Funds"],
+                ["Angel/Pre-Seed", 1, "$190K", "Pilot stations & initial inventory"],
+                ["Pre-Seed", 2, "$1.1M", "Market expansion"],
+                ["Seed", 3, "$6.0M", "Rapid scaling"],
+                ["Series A", 4, "$9.0M", "Market leadership"],
+                ["Series B", 5, "$27.5M", "National expansion"],
+                ["Series C", 6, "$47.5M", "Market dominance"],
+                ["Total", "", "$85.1M - $96.1M", ""]
+            ];
+            
+            // Add summary sheet to workbook
+            const ws = XLSX.utils.aoa_to_sheet(summaryData);
+            XLSX.utils.book_append_sheet(wb, ws, "Executive Summary");
+            
+            // Generate Excel file and trigger download
+            XLSX.writeFile(wb, 'Fortune_Cleantech_Executive_Summary.xlsx');
+        }
+    </script>
+</body>
+</html>
+
